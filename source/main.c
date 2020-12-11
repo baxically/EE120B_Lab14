@@ -24,8 +24,6 @@ void LED_Output(){
     switch(U_State){
         case U_Init:
             output = USART_Receive(0);
-            UDR = output;
-            USART_Flush();
             U_State = U_On;
             break;
         case U_On:
