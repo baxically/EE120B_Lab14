@@ -10,57 +10,21 @@
  *  DEMO LINK:
  */
 #include <avr/io.h>
-#include <avr/interrupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #include "timer.h"
 #include "usart_ATmega1284.h"
 #endif
 
+unsigned char output = 0x00;
 
-unsigned char output;
-enum U_States {U_Init, U_On, U_Off} U_State;
-
-void LED_Output(){
-    switch(U_State){
-        case U_Init:
-            output = USART_Receive(0);
-            U_State = U_On;
-            break;
-        case U_On:
-            /*if (USART_HasTransmitted(0)){
-                USART_Flush(0);
-            }
-            output = 0x01;
-            UDR = output;
-            if (USART_IsSendReady(0)){
-                USART_Send(output, 0);
-            }*/
-            if (USART_HasReceived(0)){
-                output = USART_Receive(0);
-                U_State = U_Off;
-            } else {
-                USART_Flush(0);
-                U_State = U_On;
-            }
-            break;
-        case U_Off:
-            /*if (USART_HasTransmitted(0)){
-                                USART_Flush(0);
-            }
-            output = 0x01;
-            UDR = output;
-            if (USART_IsSendReady(0)){
-                USART_Send(output, 0);
-            }*/
-            if (USART_HasReceived(0)){
-                output = USART_Receive(0);
-                U_State = U_On;
-            } else {
-                USART_Flush(0);
-                U_State = U_Off;
-            }
-            break;
+void receive()
+{
+    if(USART_HasReceived(0))
+    {
+        output = USART_Receive(0);
+        PORTA = output;
+        USART_Flush(0);
     }
 }
 
@@ -68,18 +32,18 @@ void LED_Output(){
 int main(void) {
     /* Insert DDR and PORT initializations */
     DDRA = 0xFF; PORTA = 0x00;
-    DDRD = 0x00; PORTD = 0xFF;
+    //DDRD = 0x00; PORTD = 0xFF;
     /* Insert your solution below */
     TimerOn();
-    TimerSet(100);
+    TimerSet(1000);
     initUSART(0);
-    while (1) {
-    LED_Output();
     PORTA = output;
+    while (1) {
         while (!TimerFlag) {
             
         }
         TimerFlag = 0;
+        receiveTick();
     }
     return 1;
 }
