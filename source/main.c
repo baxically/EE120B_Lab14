@@ -10,6 +10,7 @@
  *  DEMO LINK:
  */
 #include <avr/io.h>
+#include <avr/interupt.h"
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #include "timer.h"
@@ -62,6 +63,7 @@ void LED_Output(){
             break;
     }
 }
+
 //Follower Code
 int main(void) {
     /* Insert DDR and PORT initializations */
@@ -74,6 +76,10 @@ int main(void) {
     while (1) {
     LED_Output();
     PORTA = output;
+        while (!TimerFlag) {
+            
+        }
+        TimerFlag = 0;
     }
     return 1;
 }
