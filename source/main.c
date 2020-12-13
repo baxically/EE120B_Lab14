@@ -38,9 +38,9 @@ void LED_Output(){
             }*/
             if (USART_HasReceived(0)){
                 output = USART_Receive(0);
-                USART_Flush(0);
                 U_State = U_Off;
             } else {
+                USART_Flush(0);
                 U_State = U_On;
             }
             break;
@@ -55,9 +55,9 @@ void LED_Output(){
             }*/
             if (USART_HasReceived(0)){
                 output = USART_Receive(0);
-                USART_Flush(0);
                 U_State = U_On;
             } else {
+                USART_Flush(0);
                 U_State = U_Off;
             }
             break;
