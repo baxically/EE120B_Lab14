@@ -43,8 +43,8 @@ void send()
 //Follower Code
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRA = 0xFF; PORTA = 0x00;
-    //DDRD = 0x00; PORTD = 0xFF;
+    DDRA = 0xFF; 
+    PORTA = 0x00;
     /* Insert your solution below */
     TimerOn();
     TimerSet(100);
