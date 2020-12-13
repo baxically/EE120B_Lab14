@@ -18,13 +18,25 @@
 
 unsigned char tmpA = 0x00;
 
-void receive()
+void send()
 {
-    if(USART_HasReceived(0))
+    if(USART_IsSendReady(0))
     {
-        tmpA = USART_Receive(0);
         PORTA = tmpA;
-        USART_Flush(0);
+        USART_Send(tmpA, 0);
+        while(!USART_HasTransmitted(0))
+        {
+            continue;
+        }
+        
+        if(tmpA == 0x01)
+        {
+            tmpA = 0x00;
+        }
+        else
+        {
+            tmpA = 0x01;
+        }
     }
 }
 
@@ -37,8 +49,6 @@ int main(void) {
     TimerOn();
     TimerSet(100);
     initUSART(0);
-    PORTA = tmpA;
-    USART_Flush(0);
     
     while (1) {
         while(!TimerFlag)
@@ -46,7 +56,7 @@ int main(void) {
             
         }
         TimerFlag = 0;
-        receive();
+        send();
     }
     return 1;
 }
