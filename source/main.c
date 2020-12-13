@@ -12,42 +12,41 @@
 #include <avr/io.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
-#endif
-#include "usart_ATmega1284.h"
 #include "timer.h"
-unsigned char temp = 0x00;
+#include "usart_ATmega1284.h"
+#endif
 
+unsigned char tmpA = 0x00;
 
-
-void receiveTick(){
-    
-    if(USART_HasReceived(0)){
-        temp = USART_Receive(0);
-        PORTA = temp;
+void receive()
+{
+    if(USART_HasReceived(0))
+    {
+        tmpA = USART_Receive(0);
+        PORTA = tmpA;
         USART_Flush(0);
-        
     }
-    
 }
 
-
-
-
-
+//Follower Code
 int main(void) {
     /* Insert DDR and PORT initializations */
     DDRA = 0xFF; PORTA = 0x00;
-
-    initUSART(0);
-    TimerSet(5);
-    TimerOn();
-    PORTA = temp;
-    USART_Flush(0);
+    //DDRD = 0x00; PORTD = 0xFF;
     /* Insert your solution below */
+    TimerOn();
+    TimerSet(100);
+    initUSART(0);
+    PORTA = tmpA;
+    USART_Flush(0);
+    
     while (1) {
-    while(!TimerFlag);
-    TimerFlag = 0;
-    receiveTick();
+        while(!TimerFlag)
+        {
+            
+        }
+        TimerFlag = 0;
+        receiveTick();
     }
     return 1;
 }
