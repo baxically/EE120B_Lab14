@@ -46,7 +46,7 @@ int main(void) {
             
         }
         TimerFlag = 0;
-        receiveTick();
+        receive();
     }
     return 1;
 }
