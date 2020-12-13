@@ -10,7 +10,7 @@
  *  DEMO LINK:
  */
 #include <avr/io.h>
-#include <avr/interupt.h
+#include <avr/interupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #include "timer.h"
