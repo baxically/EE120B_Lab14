@@ -14,7 +14,7 @@
 #include "simAVRHeader.h"
 #endif
 #include "usart_ATmega1284.h"
-#include "Timer.h"
+#include "timer.h"
 unsigned char temp = 0x00;
 
 
