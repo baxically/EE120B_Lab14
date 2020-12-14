@@ -8,6 +8,13 @@
  *
  *  DEMO LINK:
  */
+#include <avr/io.h>
+#ifdef _SIMULATE_
+#include "simAVRHeader.h"
+#include "timer.h"
+#include "usart_ATmega1284.h"
+#endif
+
 unsigned char tmpA = 0x00;
 unsigned char tickCount = 100;
 unsigned char receiveCount = 5;
@@ -24,7 +31,7 @@ void Tick()
 
         case start:
             currCount = receiveCount;
-            currState = Follow;
+            currState = follower;
             break;
 
         case leader:
