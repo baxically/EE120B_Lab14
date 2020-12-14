@@ -1,8 +1,8 @@
 /*	Author: Ally Thach, athac007
  *  Partner(s) Name: 
  *	Lab Section: 24
- *	Assignment: Lab 14  Exercise 1
- *	Exercise Description: Two microcontrollers each have an LED connected to PA0. Both LEDs are synchronously toggled on/off in one second intervals using USART.
+ *	Assignment: Lab 14  Exercise 2
+ *	Exercise Description: Expand upon Exercise 1 by adding a switch that determines the mode (Leader or Follower) of the microcontroller.
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
@@ -73,7 +73,7 @@ int main(void) {
         toggle = ~PINB;
         while(!TimerFlag);
         TimerFlag = 0;
-        if (toggle == 0x01)
+        if (toggle == 0x00)
         {
             TimerSet(500);
             PORTC = 0xFF;
